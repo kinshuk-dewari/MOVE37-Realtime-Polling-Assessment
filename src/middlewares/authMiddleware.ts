@@ -7,6 +7,7 @@ export interface AuthRequest extends Request {
   user?: any;
 }
 
+// middleware for checking whether authorized person is accessing the api endpoint or not throught token
 export function authMiddleware(
   req: AuthRequest,
   res: Response,
@@ -24,8 +25,11 @@ export function authMiddleware(
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // attach decoded user info
+    // attach decoded user info
+    req.user = decoded; 
+
     next();
+
   } catch (err) {
     return res.status(403).json({
       error: "Unauthorized: Invalid or expired token",

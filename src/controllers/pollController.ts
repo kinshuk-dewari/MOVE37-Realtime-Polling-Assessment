@@ -1,19 +1,28 @@
-import { Response,Request } from "express";
+import { Response, Request } from "express";
 import { PrismaClient } from "@prisma/client";
-import { AuthRequest } from "../middlewares/authMiddleware"; // import your type
+import { AuthRequest } from "../middlewares/authMiddleware";
 
 const prisma = new PrismaClient();
 
-// ✅ Use AuthRequest instead of Request
+// endpoint to create the poll
 export const createPoll = async (req: AuthRequest, res: Response) => {
   try {
     const { question, options, isPublished } = req.body;
-    const creatorId = req.user?.id; // ✅ now TS knows user exists
+    const creatorId = req.user?.id;
 
-    if (!question || !creatorId || !Array.isArray(options) || options.length < 2) {
-      return res.status(400).json({ error: "question and options (>=2) required" });
+    // checking for empty fields
+    if (
+      !question ||
+      !creatorId ||
+      !Array.isArray(options) ||
+      options.length < 2
+    ) {
+      return res
+        .status(400)
+        .json({ error: "question and options (>=2) required" });
     }
 
+    // creating a poll 
     const poll = await prisma.poll.create({
       data: {
         question,
@@ -29,14 +38,18 @@ export const createPoll = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(201).json(poll);
+
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
 };
 
+// endpoint to get the poll by ID
 export const getPollsById = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
+
+    // checking whether the poll exists
     const poll = await prisma.poll.findUnique({
       where: { id },
       include: {
@@ -62,8 +75,10 @@ export const getPollsById = async (req: Request, res: Response) => {
   }
 };
 
+// endpoint to get all the polls that existes in the database
 export const getPolls = async (_req: Request, res: Response) => {
   try {
+    // finding all teh polls that aer there in the database
     const polls = await prisma.poll.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -86,6 +101,7 @@ export const getPolls = async (_req: Request, res: Response) => {
     }));
 
     res.json(transformed);
+    
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

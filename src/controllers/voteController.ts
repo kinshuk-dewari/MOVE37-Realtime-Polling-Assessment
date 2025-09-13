@@ -7,8 +7,9 @@ const prisma = new PrismaClient();
 export const castVote = async (req: Request, res: Response) => {
   try {
     const { pollId, optionId } = req.body;
-    const userId = (req as any).user.id; // injected by authMiddleware
+    const userId = (req as any).user.id;
 
+    // checking for empty field
     if (!pollId || !optionId) {
       return res.status(400).json({ error: "pollId and optionId required" });
     }
@@ -53,6 +54,7 @@ export const castVote = async (req: Request, res: Response) => {
         })),
       };
 
+      // broadcasting the polls tracking through websocket
       broadcastPollUpdate(pollWithCounts.id, payload);
     }
 

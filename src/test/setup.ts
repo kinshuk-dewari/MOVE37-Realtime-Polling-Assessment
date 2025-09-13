@@ -1,4 +1,3 @@
-// src/test/setup.ts
 import request from "supertest";
 import app from "../app";
 
