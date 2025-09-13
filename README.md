@@ -26,19 +26,19 @@ Users can register, log in, and create or vote on polls with multiple options.
 
 ## Getting Started
 
-### 1 Clone the Repository
+### 1.  Clone the Repository
 ```bash
 git clone https://github.com/your-username/move37-realtime-polling.git
 cd move37-realtime-polling
 ````
 
-### 2 Install Dependencies
+### 2.  Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3 Setup Environment Variables
+### 3.  Setup Environment Variables
 
 Create a `.env` file in the project root:
 
@@ -49,7 +49,7 @@ PORT=6969
 ```
 
 Replace the DATABASE_URL with the postgressql 
-### 4 Setup Database with Prisma
+### 4.  Setup Database with Prisma
 
 Migrating the database and generating Prisma Client
 ```bash
@@ -57,7 +57,7 @@ npx prisma migrate dev --name init
 npx prisma generate
 ```
 
-### 5 Run the Server
+### 5.  Run the Server
 
 ```bash
 npm run dev
@@ -66,14 +66,16 @@ npm run dev
 Server will start at: **[http://localhost:5000](http://localhost:6969)**
 
 ---
-### 6 Run the WebSocket
+### 6.  Run the WebSocket
 
 ```bash
 npm run test:ws 3
 ```
-Here, 3 is the pollId of the poll you want to see live updates of.[you can enter pollId of any poll you want to see]
+<p>Here, 3 is the pollId of the poll you want to see live updates of.[you can enter pollId of any poll you want to see]
 When you run this, the WebSocket client (src/test/testClient.ts) connects to the server and joins the poll room poll_3.
-You’ll then start receiving real-time updates such as new votes, live vote counts, and poll events for that poll.
+ You’ll then start receiving real-time updates such as new votes, live vote counts, and poll events for that poll.
+</p>
+
 ---
 
 ## Running Tests
