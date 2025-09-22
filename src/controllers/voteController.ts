@@ -22,7 +22,7 @@ export const castVote = async (req: Request, res: Response) => {
     if (!poll) return res.status(404).json({ error: "Poll not found" });
 
     // Ensure the option belongs to this poll
-    const option = poll.options.find((o) => o.id === optionId);
+    const option = poll.options.find((o:any) => o.id === optionId);
     if (!option) {
       return res
         .status(400)
@@ -47,7 +47,7 @@ export const castVote = async (req: Request, res: Response) => {
       const payload = {
         id: pollWithCounts.id,
         question: pollWithCounts.question,
-        options: pollWithCounts.options.map((o) => ({
+        options: pollWithCounts.options.map((o:any) => ({
           id: o.id,
           text: o.text,
           voteCount: o.votes.length,

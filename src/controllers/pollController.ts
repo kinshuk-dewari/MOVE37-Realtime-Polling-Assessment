@@ -62,7 +62,7 @@ export const getPollsById = async (req: Request, res: Response) => {
 
     const transformed = {
       ...poll,
-      options: poll.options.map((opt) => ({
+      options: poll.options.map((opt:any) => ({
         id: opt.id,
         text: opt.text,
         voteCount: opt.votes.length,
@@ -87,13 +87,13 @@ export const getPolls = async (_req: Request, res: Response) => {
       },
     });
 
-    const transformed = polls.map((p) => ({
+    const transformed = polls.map((p:any) => ({
       id: p.id,
       question: p.question,
       isPublished: p.isPublished,
       createdAt: p.createdAt,
       creator: p.creator,
-      options: p.options.map((o) => ({
+      options: p.options.map((o:any) => ({
         id: o.id,
         text: o.text,
         voteCount: o.votes.length,
